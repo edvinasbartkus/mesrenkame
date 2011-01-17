@@ -1,8 +1,10 @@
 package org.geeks.elect.crawl
 
 import mesrenkame.ElectionsService
+import org.apache.commons.logging.LogFactory
 
 class CrawlMunicipalityElections {
+  private static final log = LogFactory.getLog(this)
 
   def crawl2007() {
     crawl2007Districts().each {
@@ -22,7 +24,8 @@ class CrawlMunicipalityElections {
     doc.depthFirst().findAll {
       it.name() == "a" && it.@href =~ /DalyvaujanciosPartijos.html/
     }.each {
-      urls << [ it.name(), it.href.toString() ]
+      log.info "Found district ${it.text()} with link to ${it.@href.toString()}"
+      urls << [ it.text(), it.@href.toString() ]
     }
 
     return urls

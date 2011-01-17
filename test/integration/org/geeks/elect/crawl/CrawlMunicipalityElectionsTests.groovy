@@ -13,7 +13,7 @@ class CrawlMunicipalityElectionsTests extends GroovyTestCase {
     }
 
     void testCrawl2007() {
-      new CrawlMunicipalityElections().crawl2007Districts()
+      new CrawlMunicipalityElections().crawl2007()
       assert District.count() == 60
     }
 }
