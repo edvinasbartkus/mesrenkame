@@ -6,8 +6,6 @@ class District {
   String address
   String phone
 
-  static constraints = {
-  }
   static mapping = {
     name index:true
   }
