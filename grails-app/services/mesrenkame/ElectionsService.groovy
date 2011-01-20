@@ -24,17 +24,17 @@ class ElectionsService {
   }
 
   def findOrCreateElections(String name, String year) {
-      def elections = Elections.findByName(name)
-      if(!elections) {
-        elections = new Elections(name:name)
-        elections.year = year
-        elections.save(flush:true)
-        log.debug "Elections ${name} created with id=${elections.id}."
-      } else {
-        log.debug "Elections ${name} found with id=${elections.id}"
-      }
+    def elections = Elections.findByName(name)
+    if(!elections) {
+      elections = new Elections(name:name)
+      elections.year = year
+      elections.save(flush:true)
+      log.debug "Elections ${name} created with id=${elections.id}."
+    } else {
+      log.debug "Elections ${name} found with id=${elections.id}"
+    }
 
-      return elections
+    return elections
   }
 
   def findOrCreatePerson(String firstname,String lastname,String birthdate) {
@@ -43,6 +43,8 @@ class ElectionsService {
       like("lastname",lastname)
       like("birthdate",birthdate)
     }
+
+    person = person.size() > 0 ? person[0] : person
 
     if(!person) {
       person = new Person(firstname:firstname, lastname:lastname)
@@ -90,6 +92,7 @@ class ElectionsService {
     }
 
     if(!candidate) {
+      log.debug "Creating candidate ${number} ${person.fullname} who is from ${party.name} ${district.name} at ${elections.name}"
       candidate = new Candidate(party:party, person:person, elections:elections, district:district, number:number)
       candidate.save(flush:true)
       log.debug "Candidate ${person.fullname} was created with ${candidate.id}"

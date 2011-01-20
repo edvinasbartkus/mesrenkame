@@ -5,5 +5,5 @@ class Candidate {
   Elections elections
   Party party
   District district
-  Integer num
+  Integer number
 }

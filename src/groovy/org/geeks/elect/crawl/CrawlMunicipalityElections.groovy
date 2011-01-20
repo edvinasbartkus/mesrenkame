@@ -12,6 +12,7 @@ class CrawlMunicipalityElections {
   private static final ElectionsService electionsService = new ElectionsService()
   private Elections elections
   private District currentDistrict
+  private Party currentParty
 
   def url = "http://www.vrk.lt/rinkimai/3/Kandidatai/"
 
@@ -51,6 +52,7 @@ class CrawlMunicipalityElections {
 
       log.debug "Found ${partyName} participating in ${elections.name}"
       Party party = electionsService.findOrCreateParty(partyName)
+      this.currentParty = party
       electionsService.findOrCreatePartyParticipation(elections, party)
 
 
@@ -73,11 +75,18 @@ class CrawlMunicipalityElections {
       def personUrl = it.@href as String
 
       Person person = crawl2007Candidate(number as Integer, firstname, lastname, personUrl)
-      electionsService.findOrCreateCandidate(elections, person, party, currentDistrict, number as Integer)
+//      electionsService.findOrCreateCandidate(elections, person, this.currentParty, currentDistrict, number as Integer)
     }
   }
 
   Person crawl2007Candidate(Integer number, String firstname, String lastname, String url) {
+    def doc = new GetPage(url:this.url + "Kandidatai/" + url).parse()
+    doc.depthFirst().findAll {
+      it.name() == "table" && it.@class == "partydata"
+    }[1].tbody.tr.td.b.each {
+      println it.text()
+    }
+
     Person person = electionsService.findOrCreatePerson(firstname, lastname, "")
     return person
     // def doc = new GetPage(url:url).parse()

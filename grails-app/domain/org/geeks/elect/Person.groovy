@@ -14,7 +14,7 @@ class Person {
   List declarations
   static hasMany = [ diplomas:Diploma, declarations:Declaration ]
 
-  def fullname() {
+  def getFullname() {
     return "${firstname} ${lastname}"
   }
 }

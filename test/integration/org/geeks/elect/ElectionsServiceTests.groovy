@@ -33,7 +33,7 @@ class ElectionsServiceTests extends GroovyTestCase {
   }
 
   void testFindOrCreatePerson() {
-    Person person = service.findOrCreatePerson("Edvinas", "Bartkus", "1987-07-23")
+    Person person = service.findOrCreatePerson("Edvinas", "Bartkus", "")
     assert person
     assert person.id
   }
