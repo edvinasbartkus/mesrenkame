@@ -81,10 +81,13 @@ class CrawlMunicipalityElections {
 
   Person crawl2007Candidate(Integer number, String firstname, String lastname, String url) {
     def doc = new GetPage(url:this.url + "Kandidatai/" + url).parse()
+
+    // Parsing education
     doc.depthFirst().findAll {
       it.name() == "table" && it.@class == "partydata"
-    }[1].tbody.tr.td.b.each {
-      println it.text()
+    }[1].tbody.depthFirst().findAll() {
+      it.name() == "tr" }.each {
+      println it.name()
     }
 
     Person person = electionsService.findOrCreatePerson(firstname, lastname, "")

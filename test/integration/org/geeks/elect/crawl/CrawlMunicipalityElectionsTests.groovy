@@ -13,13 +13,13 @@ class CrawlMunicipalityElectionsTests extends GroovyTestCase {
   protected void tearDown() {
     super.tearDown()
   }
-
-  void testCrawl2007() {
+  // Deprecated because it runs the whole process of crawl
+/*  void testCrawl2007() {
     new CrawlMunicipalityElections().crawl2007()
     assert District.count() == 60
     assert Candidate.count() > 0
     assert Person.count() > 0
-  }
+  }*/
 
   void testCrawlCandidate2007() {
     def url = "../../Kandidatai/Kandidatas994/Kandidato994Anketa.html"
